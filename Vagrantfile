@@ -19,8 +19,9 @@ Vagrant.configure(2) do |config|
     node.vm.network :private_network, ip: "192.168.33.11"
     node.vm.provision "shell", inline: <<-SHELL
       sudo yum install -y python-simplejson
-      echo '192.168.33.11 provision_from' >> /etc/hosts
+      echo '192.168.33.12 provision_from' >> /etc/hosts
     SHELL
+    node.ssh.forward_agent = true
   end
 
   config.vm.define :provision_from do |node|
@@ -35,6 +36,7 @@ Vagrant.configure(2) do |config|
       sudo yum install -y git
       echo '192.168.33.11 provision_dest' >> /etc/hosts
     SHELL
+    node.ssh.forward_agent = true
   end
   
   # Disable automatic box update checking. If you disable this, then
